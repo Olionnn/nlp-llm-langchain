@@ -1,14 +1,15 @@
 
-
-### PG VECTOR (PACAKGE NGGA JELAS)
-```bash
-    pip install langchain_postgres langchain-ollama
+## Installation 
+- Install Ollama : https://ollama.com/
+- Intall llama3.2:3b
+``` bash
+    Ollama pull llama3.2:3b
 ```
-
-### CHROMADB
+- Install Python Dependensi
 ```bash
-    pip install  "langchain-chroma>=0.1.2" langchain-ollama
+    pip install -r requirements.txt
 ```
-
-
-
+- Run Program
+```bash
+    python main.py
+```
