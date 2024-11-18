@@ -2,7 +2,7 @@ from langchain_chroma import Chroma
 from langchain_ollama import OllamaEmbeddings
 import os 
 from vectordb import initialize_vector_db
-from llm import init_llm, run_chain
+from llm import init_digi_bot, run_chain
 
 embedding_model = OllamaEmbeddings(model="llama3.2:3b")
 persist_directory = "./data/vector_db"
@@ -14,7 +14,7 @@ if os.path.exists(persist_directory):
         persist_directory=persist_directory, 
         embedding_function=embedding_model)
     
-    chain = init_llm(vector_db)
+    chain = init_digi_bot(vector_db)
     
 else:
     vector_db = initialize_vector_db(embedding_model, persist_directory)
