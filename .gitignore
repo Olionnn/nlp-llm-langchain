@@ -1,5 +1,6 @@
 venv
 .env
 *.csv
-rag/data/*
+vectordb/data/*
 chroma
+rag/data/digipoin.pdf
