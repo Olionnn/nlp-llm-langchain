@@ -4,3 +4,5 @@ vectordb/data/*
 chroma
 
 rag/data/vector_db/*
+rag/data/company.csv
+rag/data/digipoin.pdf
