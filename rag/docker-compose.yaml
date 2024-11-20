@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/llama3.2:1b
+    container_name: ollama
+    ports:
+      - "8000:8000"
+    environment:
+      - SOME_ENV_VAR=your_value
+
+  fastapi:
+    image: tiangolo/uvicorn-gunicorn-fastapi:python3.9
+    container_name: fastapi
+    volumes:
+      - ./app:/app
+    ports:
+      - "8001:8000"
+    depends_on:
+      - ollama
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+
+  cloudflare:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflare
+    environment:
+      - TUNNEL_TOKEN=your_tunnel_token
+    command: tunnel --no-autoupdate run

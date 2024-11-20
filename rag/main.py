@@ -3,7 +3,9 @@ from langchain_ollama import OllamaEmbeddings
 import os 
 from vectordb import initialize_vector_db
 from llm import init_digi_bot, run_chain
-
+from fastapi import FastAPI, Form
+from typing import Annotated
+app = FastAPI()
 embedding_model = OllamaEmbeddings(model="llama3.2:3b")
 persist_directory = "./data/vector_db"
 vector_db = None
@@ -21,14 +23,27 @@ else:
     print("Vector database initialized.")
 
 
-while True:
-    question = input("Tanya Aku Apa Saja: ")
+# while True:
+#     question = input("Tanya Aku Apa Saja: ")
+#     result = run_chain(chain, question)
+    
+#     if question == "exit":
+#         break
+
+
+
+async def get_answer(question: str):
     result = run_chain(chain, question)
+    return result, question
+
+
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
     
-    if question == "exit":
-        break
-
-
-
-
     
+@app.post("/generate")
+async def generate(question: Annotated[str, Form()]):
+    result, question = await get_answer(question)
+    return {"question": question, "answer": result}
+
