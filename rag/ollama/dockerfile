@@ -1,0 +1,6 @@
+FROM ollama/ollama:latest
+
+# Install additional tools if needed
+# Example: RUN apt-get update && apt-get install -y curl
+
+CMD ["/bin/sh", "-c", "ollama pull llama3.2:1b && ollama serve"]

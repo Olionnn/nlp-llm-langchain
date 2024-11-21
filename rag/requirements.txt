@@ -1,3 +1,4 @@
+python-multipart
 langchain
 langchain-chroma
 langchain-ollama

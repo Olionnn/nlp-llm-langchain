@@ -1,0 +1,7 @@
+# Ignore vector database directory
+data/vector_db/
+
+# Optionally ignore other files/directories not needed in the image
+*.pyc
+__pycache__/
+.env

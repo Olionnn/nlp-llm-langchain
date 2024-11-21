@@ -3,9 +3,14 @@ from langchain.prompts import ChatPromptTemplate, PromptTemplate
 from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
+import os 
 
-local_model = "llama3.2:3b"  
-llm = ChatOllama(model=local_model)
+
+ollama_host = os.getenv("OLLAMA_HOST", "http://localhost:11434")  
+
+
+local_model = "llama3.2:1b"  
+llm = ChatOllama(model=local_model, base_url=ollama_host)
 
 WHITELIST = [
     # "What are your capabilities?",

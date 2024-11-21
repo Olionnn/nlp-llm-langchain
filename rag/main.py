@@ -5,9 +5,16 @@ from vectordb import initialize_vector_db
 from llm import init_digi_bot, run_chain
 from fastapi import FastAPI, Form
 from typing import Annotated
+
+
+ollama_host = os.getenv("OLLAMA_HOST", "http://localhost:11434")  # Default to localhost if not set
+persist_dir = os.getenv("PERSIST_DIR", "./data/vector_db")  # Default to local folder if not set
+
+
+
 app = FastAPI()
-embedding_model = OllamaEmbeddings(model="llama3.2:3b")
-persist_directory = "./data/vector_db"
+embedding_model = OllamaEmbeddings(model="llama3.2:1b", base_url=ollama_host)
+persist_directory = persist_dir
 vector_db = None
 chain = None
 if os.path.exists(persist_directory):

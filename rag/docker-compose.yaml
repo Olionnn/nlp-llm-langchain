@@ -2,23 +2,31 @@ version: '3.8'
 
 services:
   ollama:
-    image: ollama/llama3.2:1b
+    image: ollama/ollama
     container_name: ollama
     ports:
-      - "8000:8000"
-    environment:
-      - SOME_ENV_VAR=your_value
-
-  fastapi:
-    image: tiangolo/uvicorn-gunicorn-fastapi:python3.9
-    container_name: fastapi
+      - 11434:11434/tcp
     volumes:
-      - ./app:/app
+      - /var/opt/data/ollama/ollama:/root/.ollama
+  #   # devices:
+  #   #   - /dev/kfd
+  #   #   - /dev/dri
+    
+  ai-application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-application
     ports:
-      - "8001:8000"
-    depends_on:
-      - ollama
-    command: uvicorn main:app --host 0.0.0.0 --port 8000
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data 
+      - /var/opt/data/ollama/ollama:/root/.ollama
+    environment:
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - PERSIST_DIR=/app/data/vector_db
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
 
   cloudflare:
     image: cloudflare/cloudflared:latest
@@ -26,3 +34,4 @@ services:
     environment:
       - TUNNEL_TOKEN=your_tunnel_token
     command: tunnel --no-autoupdate run
+
