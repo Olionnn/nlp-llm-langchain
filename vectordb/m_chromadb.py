@@ -102,8 +102,12 @@ documents = [
     document_9,
     document_10,
 ]
+
+# Add Named to uuids for each document in the collection
 uuids = [str(uuid4()) for _ in range(len(documents))]
 
+    
+print("uuids" , uuids)
 print(vector_store.add_documents(documents=documents, ids=uuids))
 
 updated_document_1 = Document(
